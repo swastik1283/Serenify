@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "question": "What is the main reason you are seeking therapy?",
+    "options": [
+      { "id": 1, "text": "Depression" },
+      { "id": 2, "text": "Anxiety" },
+      { "id": 3, "text": "Trauma" },
+      { "id": 4, "text": "Relationship Issues" }
+    ]
+  },
+  {
+    "id": 2,
+    "question": "What type of therapy are you most interested in?",
+    "options": [
+      { "id": 1, "text": "Cognitive Behavioral Therapy (CBT)" },
+      { "id": 2, "text": "Dialectical Behavior Therapy (DBT)" },
+      { "id": 3, "text": "Psychodynamic Therapy" },
+      { "id": 4, "text": "Mindfulness-Based Therapies" }
+    ]
+  },
+  {
+    "id": 3,
+    "question": "What is your preferred communication style for therapy?",
+    "options": [
+      { "id": 1, "text": "In-person sessions" },
+      { "id": 2, "text": "Phone sessions" },
+      { "id": 3, "text": "Video sessions" },
+      { "id": 4, "text": "Online messaging" }
+    ]
+  },
+  {
+    "id": 4,
+    "question": "What is your availability for therapy sessions?",
+    "options": [
+      { "id": 1, "text": "Weekdays" },
+      { "id": 2, "text": "Weekends" },
+      { "id": 3, "text": "Mornings" },
+      { "id": 4, "text": "Evenings" }
+    ]
+  },
+  {
+    "id": 5,
+    "question": "What is your preferred level of experience for a therapist?",
+    "options": [
+      { "id": 1, "text": "Less than 5 years" },
+      { "id": 2, "text": "5-10 years" },
+      { "id": 3, "text": "10-20 years" },
+      { "id": 4, "text": "More than 20 years" }
+    ]
+  },
+  {
+    "id": 6,
+    "question": "What is your preferred gender for a therapist?",
+    "options": [
+      { "id": 1, "text": "Male" },
+      { "id": 2, "text": "Female" },
+      { "id": 3, "text": "Non-binary" },
+      { "id": 4, "text": "No preference" }
+    ]
+  },
+  {
+    "id": 7,
+    "question": "What is your preferred location for a therapist?",
+    "options": [
+      { "id": 1, "text": "In-office" },
+      { "id": 2, "text": "Online" },
+      { "id": 3, "text": "Home visits" },
+      { "id": 4, "text": "Other (please specify)" }
+    ]
+  },
+  {
+    "id": 8,
+    "question": "What is your budget for therapy sessions?",
+    "options": [
+      { "id": 1, "text": "Less than $50 per session" },
+      { "id": 2, "text": "$50-$100 per session" },
+      { "id": 3, "text": "$100-$200 per session" },
+      { "id": 4, "text": "More than $200 per session" }
+    ]
+  }
+]
+

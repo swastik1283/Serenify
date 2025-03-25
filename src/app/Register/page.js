@@ -1,14 +1,14 @@
 "use client";
-import React from 'react'
 import Image from 'next/image'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation';
 const Register = () => {
   const [fname,setfname]=useState("");
   const [lname,setlname]=useState("");
   const [email,setemail]=useState("");
   const [password,setpassword]=useState("");
   const[message,setMessage]=useState("")
-
+ const router =useRouter();
   const handleRegister=async(e)=>{
     e.preventDefault();
     setMessage("");
@@ -24,6 +24,9 @@ const Register = () => {
     const data=await response.json();
     if(response.ok){
       setMessage("Registration successful");
+      setTimeout(()=>{
+        router.push("/login"),2000
+      });
     }
     else{
       setMessage(data.error);

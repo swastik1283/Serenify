@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
 import questions from "./Survey.json";
-
+import { useRouter } from "next/navigation";
 const Survey = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});
-
+  const router = useRouter();
   const handleAnswer = (questionId, optionId) => {
     setAnswers((prevAnswers) => {
       const currentAnswers = prevAnswers[questionId] || [];
@@ -38,6 +38,7 @@ const Survey = () => {
   const handleSubmit = () => {
     if (currentQuestion === questions.length - 1) {
       console.log(answers);
+      router.push("/UserDash");
     }
   };
 

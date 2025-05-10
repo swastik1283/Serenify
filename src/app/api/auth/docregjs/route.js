@@ -14,7 +14,9 @@ export async function POST(req) {
     const password = formData.get("password");
     const metaid = formData.get("metaid");
     const file = formData.get("file");
-    console.log(file);
+    const fees=formData.get("fees");
+    const role=formData.get("role");
+   
     if (!(file instanceof Blob)) {
       return NextResponse.json({ error: 'File is required' }, { status: 400 });
     }
@@ -34,10 +36,13 @@ export async function POST(req) {
       email,
       password: hashedPassword,
       metaid,
+      fees,
+      role,
       ValidQualification: {
         data: buffer,
         contentType: contentType,
       },
+      
     });
 
     await newUser.save();

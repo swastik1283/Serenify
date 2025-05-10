@@ -9,7 +9,10 @@ const DocRegister = () => {
   const [password,setpassword]=useState("");
   const[metaid,setmetaid]=useState("");
   const[file,setfile]=useState(null);
+  const[fees,setfees]=useState("");
+  const[role,setrole]=useState("");
   const[message,setMessage]=useState("");
+
  const router =useRouter();
   const handleRegister=async(e)=>{
     e.preventDefault();
@@ -22,8 +25,10 @@ const DocRegister = () => {
     formData.append("password",password);
     formData.append("metaid",metaid);
     formData.append("file",file);
+    formData.append("fees",fees);
+    formData.append("role",role);
 
-  
+    console.log(fees) 
     const response=await fetch("api/auth/docregjs",{
       method:"POST",
       body:formData,
@@ -33,7 +38,7 @@ const DocRegister = () => {
     if(response.ok){
       setMessage("Registration successful");
       setTimeout(()=>{
-        router.push("/Login"),2000
+        router.push("/DoctorLogin"),2000
       });
     }
     else{
@@ -105,7 +110,7 @@ const DocRegister = () => {
            </div>
 
              <div className="mb-6">
-               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="metaid">
        MetaMask Id
                </label>
                <input
@@ -114,6 +119,30 @@ const DocRegister = () => {
                type="text"
                placeholder="00x....."
                onChange={(e)=>setmetaid(e.target.value)} required
+               />
+           </div>
+            <div className="mb-6">
+               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="fees">
+       Fees
+               </label>
+               <input
+               className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+               id="fees"
+               type="text"
+               placeholder="$"
+               onChange={(e)=>setfees(e.target.value)} required
+               />
+           </div>
+            <div className="mb-6">
+               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+       Role
+               </label>
+               <input
+               className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+               id="Role"
+               type="text"
+               placeholder="Therapist"
+               onChange={(e)=>setrole(e.target.value)} required
                />
            </div>
 
@@ -135,7 +164,7 @@ const DocRegister = () => {
                >
              Register
                </button>
-              <p>{message}</p>
+              <p className='text-black'>{message}</p>
            </div>
            </div>
            </div>

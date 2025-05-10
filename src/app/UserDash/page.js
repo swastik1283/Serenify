@@ -3,13 +3,32 @@
 import Navbar from "../Navbar/page";
 import { useRouter } from "next/navigation";
 
+import { useState,useEffect } from "react";
 
-const users=[
-  {id:"1",name:"alice",field:"mentalissue",fees:"100",role:"doctor"
-}];
+
 const UserDash = () => {
- 
+
   const router=useRouter();
+  const [doctors,setdoctors]=useState([]);
+
+  useEffect(()=>{
+  const fetchdoctor=async()=>{
+     try{
+      const res=await fetch("api/auth/Docdet");
+      const data=await res.json();
+      if(data.success){
+        console.log('success');
+        setdoctors(data.data);
+      }
+    }
+      catch(error){
+        console.error("failed to fetch doctors",error);
+      }
+
+     };
+     fetchdoctor();
+  },[])
+  
   return (
     <div className="min-h-screen bg-white-100">
       <Navbar/>
@@ -24,9 +43,9 @@ const UserDash = () => {
         <table className="min-w-full bg-white border border-gray-200">
             <thead>
                 <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                    <th className="py-3 px-6 text-left">User ID</th>
+                    <th className="py-3 px-6 text-left ">Doctor Unique ID</th>
                     
-                    <th className="py-3 px-6 text-left">Name</th>
+                    <th className="py-3 px-6 text-left ">Name</th>
                     <th className="py-3 px-6 text-left">field</th>
                     <th className="py-3 px-6 text-left">fees</th>
                     <th className="py-3 px-6 text-left">Role</th>
@@ -36,13 +55,13 @@ const UserDash = () => {
             </thead>
             
               <tbody className="text-gray-600 text-sm font-light">
-              {users.map((user)=>(
-                <tr key={user.id} className="border-b border-gray-200 hover:bg-gray-100">
-                    <td className="py-3 px-6 text-left">{user.id}</td>
-                    <td className="py-3 px-6 text-left">{user.name}</td>
-                    <td className="py-3 px-6 text-left">{user.field}</td>
-                    <td className="py-3 px-6 text-left">{user.fees}</td>
-                    <td className="py-3 px-6 text-left">{user.role}</td>
+              {doctors.map((doctors)=>(
+                <tr key={doctors.id} className="border-b border-gray-200 hover:bg-gray-100">
+                    <td className="py-3 px-6 text-left text-black">{doctors.metaid}</td>
+                    <td className="py-3 px-6 text-left">{doctors.fname}</td>
+                    <td className="py-3 px-6 text-left">{doctors.lname}</td>
+                    <td className="py-3 px-6 text-left">{doctors.fees}</td>
+                    <td className="py-3 px-6 text-left">{doctors.role}</td>
                     <td className="py-3 px-6 "><button className="px-4 py-4 bg-blue-500 text-white rounded-xl hover:bg-red-500 hover:text-black" type="button" onClick={()=>router.push('/client')}> Connect</button></td>
                 </tr>
               ))}

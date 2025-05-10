@@ -9,7 +9,9 @@ const DoctorSchema= new mongoose.Schema({
     metaid:{type:String,required:true},
     ValidQualification:{
         data:Buffer,
-        contentType:String}
+        contentType:String},
+    fees:{type:String,required:true},
+    role:{type:String,required:true}
 },
 {timestamps:true});
 

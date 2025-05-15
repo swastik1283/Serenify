@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const Navbar = () => {
   const router = useRouter();
-  const logoUrl = "/logo.png"; // Change this to your logo
+  const logoUrl = "assets/logoSerenify.png"; 
 
   return (
     <nav className="bg-gray-800">

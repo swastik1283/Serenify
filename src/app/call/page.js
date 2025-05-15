@@ -182,13 +182,13 @@ sendWsMesage("join",{
       
     return (   
 
-<div className="flex flex-col w-200 h-250 justify-center items-center m-auto p-8 h-screen bg-black text-white">
-    <div className="flex flex-row ">
-        <video id="localPlayer" autoPlay style={{width:640,height:300}}/>
+<div className="flex flex-col w-screen h-screen justify-center items-center m-auto p-8 h-screen bg-black text-white">
+    <div className="flex flex-row mb-3">
+        <video id="localPlayer" autoPlay style={{width:900,height:350}}/>
 
     </div>
-    <div className="flex flex-row">
-        <video id="peerPlayer" autoPlay style={{width:640,height:300}}/>
+    <div className="flex flex-row mt-3">
+        <video id="peerPlayer" autoPlay style={{width:900,height:350}}/>
         
     </div>
     </div> 

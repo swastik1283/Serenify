@@ -22,7 +22,7 @@ headers:{"Content-Type":"application/json"},
    if(response.ok){
     setMessage("Login successful");
     setTimeout(()=>{
-      router.push("/"),2000
+      router.push("/Docdash"),2000
     });
   }
     else{

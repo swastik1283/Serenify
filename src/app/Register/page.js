@@ -25,7 +25,7 @@ const Register = () => {
     if(response.ok){
       setMessage("Registration successful");
       setTimeout(()=>{
-        router.push("/login"),2000
+        router.push("/Login"),5000
       });
     }
     else{
@@ -95,14 +95,25 @@ const Register = () => {
                onChange={(e)=>setemail(e.target.value)} required
                />
            </div>
-           <div className="flex items-center justify-between">
+           <div className="flex items-center justify-between gap-2 mb-3">
                <button
                className="bg-blue-500 hover:bg-blue-700 text-white  py-1 px-1 rounded focus:outline-none focus:shadow-outline"
                type="submit"
                >
              Register
                </button>
-              <p>{message}</p>
+              <p className='text-black'>{message}</p>
+           </div>
+
+             <div className="flex items-center justify-between gap-2">
+               <button
+               className="bg-blue-500 hover:bg-blue-700 text-white  py-1 px-4 rounded focus:outline-none focus:shadow-outline"
+               type="submit"
+               onChange={()=>(router.push('/Login'))}
+               >
+             Already Registered? 
+               </button>
+              
            </div>
            </div>
            </div>

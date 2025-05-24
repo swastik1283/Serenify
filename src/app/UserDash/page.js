@@ -43,7 +43,7 @@ const UserDash = () => {
         <table className="min-w-full bg-white border border-gray-200">
             <thead>
                 <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                    <th className="py-3 px-6 text-left ">Doctor Unique ID</th>
+                    <th className="py-3 px-6 text-left ">Doctor  ID</th>
                     
                     <th className="py-3 px-6 text-left ">Name</th>
                     <th className="py-3 px-6 text-left">field</th>
@@ -56,13 +56,13 @@ const UserDash = () => {
             
               <tbody className="text-gray-600 text-sm font-light">
               {doctors.map((doctors)=>(
-                <tr key={doctors.id} className="border-b border-gray-200 hover:bg-gray-100">
+                <tr key={doctors.metaid} className="border-b border-gray-200 hover:bg-gray-100">
                     <td className="py-3 px-6 text-left text-black">{doctors.metaid}</td>
                     <td className="py-3 px-6 text-left">{doctors.fname}</td>
                     <td className="py-3 px-6 text-left">{doctors.lname}</td>
                     <td className="py-3 px-6 text-left">{doctors.fees}</td>
                     <td className="py-3 px-6 text-left">{doctors.role}</td>
-                    <td className="py-3 px-6 "><button className="px-4 py-4 bg-blue-500 text-white rounded-xl hover:bg-red-500 hover:text-black" type="button" onClick={()=>router.push('/client')}> Connect</button></td>
+                    <td className="py-3 px-6 "><button key={doctors.metaid} className="px-4 py-4 bg-blue-500 text-white rounded-xl hover:bg-red-500 hover:text-black"   type="button" onClick={()=>router.push(`/Payment?metaid=${doctors.metaid}`)}> Connect</button></td>
                 </tr>
               ))}
               </tbody>

@@ -17,10 +17,10 @@ contract TherapyPay{
 
    function PayforTherapy(address doctors) external payable{
      require(msg.value>0,"Payment must be greater than zero");
-     //marking doctor address for user
-     doctorAddress[msg.sender]=doctor;
+     //record which doctor user paid
+     doctorAddress[msg.sender]=doctors;
      //transfering payment
-     payable(doctor).transfer(msg.value);
+     payable(doctors).transfer(msg.value);
 
      emit PaymentReceived(msg.sender, doctors, msg.value);
    }

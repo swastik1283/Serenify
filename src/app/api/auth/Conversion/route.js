@@ -1,9 +1,15 @@
-export default async function handler(req,res){
-    const{inrAmount,symbol='matic'}=req.query;
+import { NextResponse } from "next/server";
+
+export  async function GET(req){
+const {searchParams}=new URL(req.url);
+const inrAmount=searchParams.get("inrAmount");
+const symbol=searchParams.get("symbol")||"matic";
 
     if(!inrAmount){
-        res.status(400).json({error:'No inrAmount Available'});
-    }
+        return new Response("inr amount not found",{
+            status:400
+        })
+    };
 
     const idMap={
         matic:'polygon',
@@ -11,36 +17,48 @@ export default async function handler(req,res){
     }
 
     if(!idMap[symbol]){
-        return res.status(400).json({error:"No such symbol exist"})
-    }
+        return new Response("no such symbol exist ",{
+            status:405
+        })
+    };
 
     try{
       const response=await fetch(
        `https://api.coingecko.com/api/v3/simple/price?ids=${idMap[symbol]}&vs_currencies=inr`
       )
-      if(!response){
-        return res.status(400).json({ error:
-        "Api not working"
+      if(!response.ok){
+        return new Response(
+        "Api not working",{
+            status:401
         })
       }
-       const data =await res.json()
+       const data =await response.json()
        const priceinr=data[idMap[symbol]]?.inr;
        if(!priceinr){
-        return res.status(400).json({error:"price inr misiing"})
+        return new Response("no inramount",{
+            status:400
+        })
+       };
 
-       }
        const cryptoamount=Number(inrAmount)/priceinr
-       return res.status(200).json({
+       return new Response(JSON.stringify({
         amount:cryptoamount.toFixed(6),
         symbol:symbol.toUpperCase(),
 
-       });
+       }),{
+    status:200,
+    headers:{
+        'Content-Type':'application/json'
+    },
+       }
 
+       )
     }
 
     catch(err){
         console.error(" server error")
-        return res.status(500).json({error:"Server error sikeee"})
-
-    }
+        return new Response("server error sikeeh",{
+            status:500
+        })
+    };
 }

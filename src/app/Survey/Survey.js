@@ -44,7 +44,7 @@ const Survey = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-[#F7F7F7] to-[#E5E5E5]">
-      {currentQuestion < questions.length && (
+      { questions[currentQuestion] && (
         <div
           id={`question-${currentQuestion}`}
           className={`animate-fade-in-out transition duration-500 ease-in-out ${

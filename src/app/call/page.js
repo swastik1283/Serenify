@@ -1,13 +1,16 @@
-"use client";
+  "use client";
 import { useEffect,useRef } from "react";
 import {useSearchParams} from "next/navigation";
+import { useState } from "react";
 const URL_WEB_SOCKET="ws://localhost:8090/ws";
+
+
 
 let localStream;
 let localpeerConnection;
 
-
 const Page = () => {
+    const [remoteUser,setremoteUser]=useState("Waiting..");
     const ws=useRef(null);
     const searchParams=useSearchParams();
     
@@ -27,7 +30,7 @@ wsClient.onopen=()=>{
     setupDevice();
 
 }
-wsClient.onClose=()=>
+wsClient.onclose=()=>
     console.log("WebSocket connection closed");
 wsClient.onmessage=(message)=>{
     const parsedMessage=JSON.parse(message.data);
@@ -35,10 +38,15 @@ wsClient.onmessage=(message)=>{
 
     switch(type){
         case 'joined':
-            console.log('users in this channel',body);
-            if(body.length>1){
-                setupPeerConnection();
-            }
+          
+    console.log('users in this channel', body);
+    const others = body.filter(name => name !== searchParams.get("userName"));
+    if (others.length > 0) {
+        setremoteUser(others[0]);
+        setupPeerConnection();
+    }
+   
+
             break;
         case 'offer_sdp_received':
             const offer=body;
@@ -49,8 +57,21 @@ wsClient.onmessage=(message)=>{
         break;
         case 'send_ice_candidate':
             if(body.candidate){
-                localpeerConnection.addIceCandidate(new RCTIceCandidate(body.candidate));
+                localpeerConnection.addIceCandidate(new RTCIceCandidate(body.candidate));
             }
+            break;
+        case 'quited':
+        console.log('user left',body);
+        const remotePlayer=document.getElementById("peerPlayer");
+        if(remotePlayer){
+            remotePlayer.srcObject=null;
+            
+        }
+            if(localpeerConnection){
+                localpeerConnection.close()
+                localpeerConnection=null;
+            }   
+            setremoteUser("disconnected")
             break;
 
     }
@@ -62,10 +83,6 @@ wsClient.onmessage=(message)=>{
         localpeerConnection.setRemoteDescription(new RTCSessionDescription(answer));
         localpeerConnection.onaddStream=gotRemoteStream;
     }
-
-    
-
-
 const onAnswer=(offer)=>{
     localpeerConnection=new RTCPeerConnection([],pcConstraints);
     localpeerConnection.onicecandidate=gotlocalIceCandidateAnswer;
@@ -88,6 +105,7 @@ const gotAnswerDescription=(answer)=>{
    localpeerConnection.setLocalDescription(answer);
 }
 const gotlocalIceCandidateAnswer=(event)=>{
+
     if(!event.candidate){
        const answer=localpeerConnection.localDescription;
        sendWsMesage('send_answer',{
@@ -95,11 +113,11 @@ const gotlocalIceCandidateAnswer=(event)=>{
         userName:searchParams.get('userName'),
         sdp:answer
 
-       })
-    }
-    
+       });
+    };    
 
-}
+};
+
 const sendWsMesage=(type,body)=>{
     if(ws.current && ws.current.readyState === WebSocket.OPEN){
         ws.current.send(JSON.stringify({type,body}));
@@ -159,7 +177,6 @@ const setupPeerConnection=()=>{
 
  }
 
-
 const setupDevice=()=>{
         navigator.mediaDevices.getUserMedia({audio:true,video:true})
         .then((stream)=>{
@@ -177,22 +194,59 @@ sendWsMesage("join",{
         })
 }
 
+const handleDisconnect = () => {
+  if (localStream) {
+    localStream.getTracks().forEach(track => track.stop());
+    const localPlayer = document.getElementById("localPlayer");
+    if (localPlayer) localPlayer.srcObject = null;
+  }
 
+  if (localpeerConnection) {
+    localpeerConnection.close();
+    localpeerConnection = null;
+  }
 
-      
-    return (   
+  sendWsMesage("quited", {
+    channelName: searchParams.get("channelName"),
+    userName: searchParams.get("userName"),
+  });
 
-<div className="flex flex-col w-screen h-screen justify-center items-center m-auto p-8 h-screen bg-black text-white">
-    <div className="flex flex-row mb-3">
-        <video id="localPlayer" autoPlay style={{width:900,height:350}}/>
+  const peerPlayer = document.getElementById("peerPlayer");
+  if (peerPlayer && peerPlayer.srcObject){
+    peerPlayer.srcObject.getTracks().forEach(track => track.stop());
+  peerPlayer.srcObject=null;
+} 
+    
 
-    </div>
-    <div className="flex flex-row mt-3">
-        <video id="peerPlayer" autoPlay style={{width:900,height:350}}/>
-        
-    </div>
-    </div> 
+  setremoteUser("Disconnected");
+};
+
      
-)};
+return (
+  <div className="flex flex-col w-screen h-screen justify-center items-center m-auto p-8 bg-black text-white">
+    
+    <div className="flex flex-col mb-4 relative">
+      <video id="localPlayer" autoPlay className="rounded-lg" style={{ width: 900, height: 350 }} />
+      <span className="absolute top-2 left-2 bg-gray-800 bg-opacity-75 text-white px-3 py-1 rounded">
+        You: {searchParams.get("userName")}
+      </span>
+    </div>
+
+    <div className="flex flex-col relative">
+      <video id="peerPlayer" autoPlay className="rounded-lg" style={{ width: 900, height: 350 }} />
+      <span className="absolute top-2 left-2 bg-gray-800 bg-opacity-75 text-white px-3 py-1 rounded">
+        Client: {remoteUser}
+             </span>
+    </div>
+
+    <button
+      onClick={handleDisconnect}
+      className="mt-6 px-6 py-2 rounded bg-red-600 hover:bg-red-700 transition"
+    >
+      Disconnect
+    </button>
+  </div>
+);
+};
 
 export default Page;

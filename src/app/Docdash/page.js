@@ -2,9 +2,10 @@
 import { useState,useEffect } from "react";
 import DocLogin from "../DoctorLogin/page";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 const Docdash = () => {
 const[doctors,setdoctors]=useState(null);
-
+const route=useRouter();
 useEffect(()=>{
   const fetchDoctor = async () => {
     try {
@@ -37,7 +38,7 @@ if(!doctors){
             <div className=" flex flex-row p-2 justify-between h-full ">
                 <div className="flex-col items-center text-center w-[80%]  border-r border-gray-200">
                     <h1 className="bg-[#e8d696] text-black text-3xl text-center font-bold p-5">Recent Appointment</h1>
-                 
+                 <button className="mt-5 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" onClick={()=>route.push('/client')}>Join Your Room </button>
                 </div>
      <div className=" flex-col items-end  w-[20%] ">
 

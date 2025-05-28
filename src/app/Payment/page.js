@@ -94,20 +94,22 @@ export default function Payment() {
     
       {doctors?(
         <>
-         <h2 className="text-2xl font-bold mb-2">Therapy Payment</h2>
-         <p>Doctor:{doctors.fname}</p>
-         <p>Address of wallet:{doctors.metaid}</p>
+        <div className="flex flex-col m-auto p-8">
+         <h2 className="text-2xl text-black font-bold mb-2 text-center">Therapy Payment</h2>
+         <p className="text-xl text-black mt-2 text-center">Doctor:{doctors.fname}</p>
+         <p className="text-xl text-black mt-2 text-center">Address of wallet:{doctors.metaid}</p>
        
-         <p>Fees:{doctors.fees}</p>
+         <p className=" text-xl text-black mt-2 text-center">Fees:{doctors.fees}</p>
            <button
             onClick={handlePayment}
             className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
           >
             Pay {doctors.fees} INR
           </button>
-        
-        </>):(
-          <p>Loading infor</p>
+        </div>
+        </>
+        ):(
+          <p className="text-black  text-black">Loading info</p>
       )}
     </div>
   )

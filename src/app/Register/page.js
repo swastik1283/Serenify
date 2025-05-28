@@ -12,7 +12,7 @@ const Register = () => {
   const handleRegister=async(e)=>{
     e.preventDefault();
     setMessage("");
-
+try{
     const response=await fetch("api/auth/registeri",{
       method:"POST",
       body:JSON.stringify({fname,lname,email,password}),
@@ -25,16 +25,21 @@ const Register = () => {
     if(response.ok){
       setMessage("Registration successful");
       setTimeout(()=>{
-        router.push("/Login"),5000
+        router.push("/Login"),2000
       });
     }
     else{
       setMessage(data.error);
     }
-  };
+   } catch (error) {
+    // ✅ Handle fetch/network failure
+    setMessage("Network error. Please try again.");
+  }
+};
+  
 
   return (  
-       <section className="relative flex justify-center items-center ">
+       <section className="relative flex max-w-vw justify-center background-#b6cbd5 items-center ">
       {/* add two circles in the background that move in and out of each other */}
       <div className="absolute top-10 right-140 w-full h-full">
         <div className="blob1"></div>
@@ -104,7 +109,7 @@ const Register = () => {
         `}</style>
       </div>
       {/* add two circles in the background that move in and out of each other */}
-      <div className="absolute bottom-100 left-100 w-full h-full">
+      <div className="absolute bottom-60 left-100 w-70 h-full">
         <div className="blob1"></div>
         <div className="blob2"></div>
         <style jsx>{`
@@ -211,7 +216,7 @@ const Register = () => {
       {/* form */}
       <form
         onSubmit={handleRegister}
-        className="bg-white/80 rounded-lg shadow-2xl max-w-md w-full p-8 m-4 md:w-1/2 md:p-12 scale-90">
+        className="bg-white/80 rounded-lg shadow-2xl max-w-[500] w-full p-8 m-4 md:w-1/2 md:p-12 scale-90">
         {/* first name */}
         <div className="mb-4">
           <label
@@ -287,6 +292,10 @@ const Register = () => {
             type="submit">
             Register
           </button>
+          <p className="mt-2 text-sm text-gray-600">
+  Already have an account? <a href="/Login" className="text-indigo-600 hover:underline">Login here</a>
+</p>
+
           <p className="text-black">{message}</p>
         </div>
       </form>

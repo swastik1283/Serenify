@@ -8,7 +8,7 @@ import Image  from 'next/image';
 export default function PageLoader(){
     const pathname=usePathname();
     const[loading,setloading]=useState(false);
-    const [debouncedPathname]=useDebounce(pathname,500)
+    const [debouncedPathname]=useDebounce(pathname,150)
 
 
     useEffect(()=>{

@@ -374,7 +374,11 @@ const DocRegister = () => {
             className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit">
             Register
+           
           </button>
+          <p className="mt-2 text-sm text-gray-600">
+  Already have an account? <a href="/DoctorLogin" className="text-indigo-600 hover:underline">Login here</a>
+</p>
           <p className="text-black">{message}</p>
         </div>
       </form>

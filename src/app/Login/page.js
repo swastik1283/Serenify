@@ -33,7 +33,7 @@ headers:{"Content-Type":"application/json"},
     
     <section className="relative w-full h-screen flex justify-center ">
       <Image
-      src="/assets/1.webp"
+      src="/assets/20945352.jpg"
       layout="fill"
       objectFit="cover"
       alt="Background"
@@ -41,7 +41,7 @@ headers:{"Content-Type":"application/json"},
       />
       
     <form onSubmit={handleLogin}>
-      <div className="container mx-15 max-w-[350px] mx-auto mt-20 py-2 px-20  bg-white/80 rounded-lg shadow-lg">
+      <div className="container mx-15 max-w-[350px] mx-auto mt-20 py-2 px-20  bg-white/90 rounded-lg shadow-lg-gray">
       <div className="mb-4">
                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
            Email
@@ -75,12 +75,6 @@ headers:{"Content-Type":"application/json"},
             >
             Sign In
             </button>
-            <a
-            className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-            href="#"
-            >
-            Forgot Password?
-            </a>
         </div>
         </div>
     </form>

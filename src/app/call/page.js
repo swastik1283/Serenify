@@ -2,7 +2,7 @@
 import { useEffect,useRef } from "react";
 import {useSearchParams} from "next/navigation";
 import { useState } from "react";
-const URL_WEB_SOCKET="ws://localhost:8090/ws";
+const URL_WEB_SOCKET="https://signallingserver-93b7.onrender.coms";
 
 
 
